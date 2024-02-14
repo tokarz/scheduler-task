@@ -1,5 +1,5 @@
 import { Person } from "../model/Person";
-import { Repository } from "../api/repository";
+import { Repository } from "../public-api/repository";
 
 export class PeopleRepository implements Repository {
   private readonly persons: { [personEmail: string]: Person } = {};

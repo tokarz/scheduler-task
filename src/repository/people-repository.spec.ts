@@ -1,6 +1,6 @@
 import { beforeEach, test, expect } from "@jest/globals";
 import { PeopleRepository } from "./people-repository";
-import { Repository } from "../api/repository";
+import { Repository } from "../public-api/repository";
 
 let sut: Repository;
 

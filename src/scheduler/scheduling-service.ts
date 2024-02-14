@@ -15,64 +15,45 @@ export class MeetingScheduler implements Scheduler {
     meetingDate: Date
   ): boolean {
     const { date, time, valid } = this.timer.getDateAndTime(meetingDate);
-    if (!valid) {
-      return false;
-    }
 
-    const slotsForDate = this.arrangedMeetings[date];
+    if (valid) {
+      const slotsForDate = this.arrangedMeetings[date];
 
-    const newMeeting = {
-      date: date,
-      startTime: time,
-      organiser: organiser,
-      members: invitedMembers,
-    };
+      const newMeeting = {
+        date: date,
+        startTime: time,
+        organiser: organiser,
+        members: invitedMembers,
+      };
 
-    if (!slotsForDate?.length) {
-      this.arrangedMeetings[date] = [];
+      if (this.noMeetingsForDateFound(slotsForDate)) {
+        this.arrangedMeetings[date] = [];
 
-      this.arrangedMeetings[date].push(newMeeting);
-
-      if (!this.usersMeetings[organiser.email]) {
-        this.usersMeetings[organiser.email] = [];
-      }
-
-      this.usersMeetings[organiser.email].push(meetingDate);
-
-      newMeeting.members.forEach((invitedMember) => {
-        if (!this.usersMeetings[invitedMember.email]) {
-          this.usersMeetings[invitedMember.email] = [];
-        }
-        this.usersMeetings[invitedMember.email].push(meetingDate);
-      });
-
-      return true;
-    } else {
-      const meetingSlotIsTaken = slotsForDate.find(
-        (timeSlot: TimeSlot) =>
-          timeSlot.date === date && timeSlot.startTime === time
-      );
-
-      if (meetingSlotIsTaken) {
-        return false;
-      } else {
-        this.arrangedMeetings[date].push(newMeeting);
-
-        if (!this.usersMeetings[organiser.email]) {
-          this.usersMeetings[organiser.email] = [];
-        }
-        this.usersMeetings[organiser.email].push(meetingDate);
-        newMeeting.members.forEach((member) => {
-          this.usersMeetings[member.email].push(meetingDate);
-        });
+        this.setUpAMeeting(organiser, date, meetingDate, newMeeting);
 
         return true;
+      } else {
+        const meetingSlotIsTaken = slotsForDate.find(
+          (timeSlot: TimeSlot) =>
+            timeSlot.date === date && timeSlot.startTime === time
+        );
+
+        if (meetingSlotIsTaken) {
+          return false;
+        } else {
+          this.setUpAMeeting(organiser, date, meetingDate, newMeeting);
+
+          return true;
+        }
       }
     }
+
+    return false;
   }
 
   cancelMeeting(meetingDate: Date): boolean {
     const { date, time } = this.timer.getDateAndTime(meetingDate);
+    
     const cancelledMeetings =
       this.arrangedMeetings[date]?.filter(
         (meeting: Meeting) => meeting.startTime === time
@@ -202,5 +183,31 @@ export class MeetingScheduler implements Scheduler {
     }
 
     return result;
+  }
+
+  private setUpAMeeting(
+    organiser: Person,
+    day: string,
+    meetingDate: Date,
+    newMeeting: Meeting
+  ) {
+    this.arrangedMeetings[day].push(newMeeting);
+
+    if (!this.usersMeetings[organiser.email]) {
+      this.usersMeetings[organiser.email] = [];
+    }
+
+    this.usersMeetings[organiser.email].push(meetingDate);
+
+    newMeeting.members.forEach((invitedMember) => {
+      if (!this.usersMeetings[invitedMember.email]) {
+        this.usersMeetings[invitedMember.email] = [];
+      }
+      this.usersMeetings[invitedMember.email].push(meetingDate);
+    });
+  }
+
+  private noMeetingsForDateFound(slotsForDate: Meeting[]) {
+    return !slotsForDate?.length;
   }
 }

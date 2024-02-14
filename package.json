@@ -4,7 +4,7 @@
   "description": "A Cool App for meeting scheduling",
   "scripts": {
     "test": "jest",
-    "run": "npx ts-node ./index.ts"
+    "start": "npx ts-node ./index.ts"
   },
   "devDependencies": {
     "@types/jest": "29.5.12",

@@ -2,6 +2,14 @@
 
 Example API for a Scheduler App
 
+# Usage
+
+Tested on node version 14.18.0!
+Run "npm install" after cloning the repository
+
+Run all tests with simple "jest" call or "npm run test"
+Run example console app with "npm run start"
+
 # Comments
 
 ## I have taken such things into consideration and decided to simplify them
