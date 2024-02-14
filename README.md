@@ -7,9 +7,9 @@ Example API for a Scheduler App
 Tested on node version 14.18.0!
 Run "npm install" after cloning the repository
 
-Run all tests with simple "jest" call or "npm run test" 
-Run all tests with simple "jest --coverage" to see coverage report 
-Run example console app with "npm run start"
+1. Run all tests with simple "jest" call or "npm run test" 
+2. Run all tests with simple "jest --coverage" to see coverage report 
+3. Run example console app with "npm run start"
 
 
 # API
