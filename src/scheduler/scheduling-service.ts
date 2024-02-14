@@ -53,7 +53,7 @@ export class MeetingScheduler implements Scheduler {
 
   cancelMeeting(meetingDate: Date): boolean {
     const { date, time } = this.timer.getDateAndTime(meetingDate);
-    
+
     const cancelledMeetings =
       this.arrangedMeetings[date]?.filter(
         (meeting: Meeting) => meeting.startTime === time
@@ -191,10 +191,13 @@ export class MeetingScheduler implements Scheduler {
     meetingDate: Date,
     newMeeting: Meeting
   ) {
+    if (!organiser?.email) {
+      return false;
+    }
     this.arrangedMeetings[day].push(newMeeting);
 
-    if (!this.usersMeetings[organiser.email]) {
-      this.usersMeetings[organiser.email] = [];
+    if (!this.usersMeetings[organiser?.email]) {
+      this.usersMeetings[organiser?.email] = [];
     }
 
     this.usersMeetings[organiser.email].push(meetingDate);

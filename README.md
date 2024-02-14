@@ -7,8 +7,23 @@ Example API for a Scheduler App
 Tested on node version 14.18.0!
 Run "npm install" after cloning the repository
 
-Run all tests with simple "jest" call or "npm run test"
+Run all tests with simple "jest" call or "npm run test" 
+Run all tests with simple "jest --coverage" to see coverage report 
 Run example console app with "npm run start"
+
+
+# API
+
+## Create Users with an unique email
+repository-service is an API to ensure that user is handled with proper check of email-uniqueness.
+It holds state, but finally it should persist data in a database.
+Api allows us to create a person, remove one and get person by email.
+
+
+## Schedule a meeting
+Scheduler-service exposes a wider than required API to show possibilities of different scheduling aproaches.
+Meeting can be setUp, cancelled, people can be added to it and removed from it. Also it can display different forms of schedule 
+(per person or per date). I wrote it having a Calendar App in Mind where I can show calnedar of a person or of a whole team for a day, and days to come
 
 # Comments
 
@@ -23,6 +38,5 @@ Run example console app with "npm run start"
 7. I assumed an organiser of a meeting should be a special case and every meeting needs to have a clear person who created a meeting. I made it solely for API purpouse, because I would find it useful in a calendar app using this service for scheduling
 8. I've created a 2 representations of storage structure for scheduler to minimize the search cost. I'm aware that it has a bigger spacial requirements but I took this strategy to keep a model simple. Normally I would inject a store and keep a data structure in ng rx store and use effects to filter out duplicates
 9. Code coverage for each class is kept above 80/90 treshold
+10. Thank you:)
 
-
-## Usage
